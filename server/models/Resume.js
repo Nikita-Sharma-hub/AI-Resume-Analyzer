@@ -6,7 +6,15 @@ const resumeSchema = new mongoose.Schema({
         ref: "User",
     },
     fileUrl: String,
-    originalName: String,
-}, { timestamps: true });
+
+    skills: [String],
+    education: [String],
+    experience: [String],
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
 
 export default mongoose.model("Resume", resumeSchema);

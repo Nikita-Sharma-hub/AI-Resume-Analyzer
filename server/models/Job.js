@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
-const jobSchema = new mongoose.Schema(
-    {
-        title: String,
-        company: String,
-        skillsRequired: [String],
-        description: String,
+const jobSchema = new mongoose.Schema({
+    title: String,
+    company: String,
+    location: String,
+    skillsRequired: [String],
+    description: String,
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
-    { timestamps: true }
-);
+});
 
 export default mongoose.model("Job", jobSchema);
