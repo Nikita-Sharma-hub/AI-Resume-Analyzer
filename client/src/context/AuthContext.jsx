@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import axios from "axios"
 import { login as loginApi, register as registerApi } from '../services/authService.jsx'
 import {
   readStorageJson,
@@ -17,6 +18,14 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (!auth) return
     writeStorageJson(STORAGE_KEYS.auth, auth)
+  }, [auth])
+
+  useEffect(() => {
+    if (auth?.token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${auth.token}`
+    } else {
+      delete axios.defaults.headers.common["Authorization"]
+    }
   }, [auth])
 
   const logout = useCallback(() => {

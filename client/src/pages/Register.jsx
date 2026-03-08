@@ -26,7 +26,6 @@ export default function Register() {
       const user = await register({ name, email, password, role })
       navigate(user?.role === 'recruiter' ? '/recruiter' : '/candidate', { replace: true })
     } catch {
-      // handled by context error
     }
   }
 

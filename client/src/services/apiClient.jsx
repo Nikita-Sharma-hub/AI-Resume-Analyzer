@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { readStorageJson, STORAGE_KEYS } from '../utils/storage.jsx'
 
-export const DEMO_MODE = String(import.meta.env.VITE_DEMO_MODE ?? 'true') !== 'false'
-
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
@@ -31,4 +29,3 @@ export function normalizeApiError(err) {
 export function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms))
 }
-

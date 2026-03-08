@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role = 'candidate' } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
@@ -15,12 +15,23 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
+            role
         });
 
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
         res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
         });
 
     } catch (error) {
@@ -49,7 +60,8 @@ export const loginUser = async (req, res) => {
             user: {
                 _id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                role: user.role
             }
         });
 

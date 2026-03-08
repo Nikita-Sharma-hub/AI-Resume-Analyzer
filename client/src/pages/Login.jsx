@@ -22,20 +22,9 @@ export default function Login() {
     if (!password) return setLocalError('Password is required')
     try {
       const user = await login({ email, password })
-      navigate(user?.role === 'recruiter' ? '/recruiter' : from, { replace: true })
-    } catch {
-      // handled by context error
-    }
-  }
-
-  const demo = async (who) => {
-    setLocalError(null)
-    try {
-      const demoEmail = who === 'recruiter' ? 'recruiter@demo.com' : 'candidate@demo.com'
-      const user = await login({ email: demoEmail, password: 'demo' })
       navigate(user?.role === 'recruiter' ? '/recruiter' : '/candidate', { replace: true })
     } catch {
-      // ignore
+
     }
   }
 
@@ -44,7 +33,7 @@ export default function Login() {
       <div className="app-container py-10">
         <div className="mx-auto w-full max-w-md">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-fuchsia-500 shadow-sm shadow-indigo-600/20" />
+            <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-linear-to-br from-indigo-600 to-fuchsia-500 shadow-sm shadow-indigo-600/20" />
             <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">
               Welcome back
             </h1>
@@ -67,7 +56,7 @@ export default function Login() {
                 label="Password"
                 type="password"
                 autoComplete="current-password"
-                placeholder="••••••••"
+                placeholder="•••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -81,24 +70,15 @@ export default function Login() {
               <Button type="submit" className="w-full" size="lg" loading={busy}>
                 Sign in
               </Button>
-
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <Button type="button" variant="secondary" onClick={() => demo('candidate')} disabled={busy}>
-                  Demo: Candidate
-                </Button>
-                <Button type="button" variant="secondary" onClick={() => demo('recruiter')} disabled={busy}>
-                  Demo: Recruiter
-                </Button>
-              </div>
             </form>
-          </Card>
 
-          <div className="mt-4 text-center text-sm text-slate-600 dark:text-slate-300">
-            Don&apos;t have an account?{' '}
-            <Link className="font-medium text-indigo-700 dark:text-indigo-200" to="/register">
-              Create one
-            </Link>
-          </div>
+            <div className="mt-4 text-center text-sm text-slate-600 dark:text-slate-300">
+              Don&apos;t have an account?{' '}
+              <Link className="font-medium text-indigo-700 dark:text-indigo-200" to="/register">
+                Create one
+              </Link>
+            </div>
+          </Card>
 
           <div className="mt-6 text-center">
             <Link className="text-sm text-slate-600 dark:text-slate-300 hover:underline" to="/">
