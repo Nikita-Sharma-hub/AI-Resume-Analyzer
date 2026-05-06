@@ -30,6 +30,51 @@ body {
         /* slate-200 */
     }
 
+    /* K Acc Rakho Theme Variables */
+    .k-acc-rakho {
+        --k-acc-primary-50: #fef2f2;
+        --k-acc-primary-100: #fef3c7;
+        --k-acc-primary-500: #f87171;
+        --k-acc-primary-600: #fbbf24;
+        --k-acc-primary-700: #f59e0b;
+        --k-acc-primary-800: #dc2626;
+        --k-acc-primary-900: #a21caf;
+
+        --k-acc-secondary-50: #f3e5f5;
+        --k-acc-secondary-100: #e5e7eb;
+        --k-acc-secondary-500: #d4d4d4;
+        --k-acc-secondary-600: #9ca3af;
+        --k-acc-secondary-700: #6b7280;
+        --k-acc-secondary-800: #4b5563;
+        --k-acc-secondary-900: #1e2937;
+
+        --k-acc-accent-50: #fbbf24;
+        --k-acc-accent-100: #f59e0b;
+        --k-acc-accent-500: #f97316;
+        --k-acc-accent-600: #ea580c;
+        --k-acc-accent-700: #dc2626;
+        --k-acc-accent-800: #a21caf;
+        --k-acc-accent-900: #a21caf;
+
+        --k-acc-neutral-50: #fef2f2;
+        --k-acc-neutral-100: #fef3c7;
+        --k-acc-neutral-500: #f87171;
+        --k-acc-neutral-600: #fbbf24;
+        --k-acc-neutral-700: #f59e0b;
+        --k-acc-neutral-800: #dc2626;
+        --k-acc-neutral-900: #a21caf;
+
+        --k-acc-background: #ffffff;
+        --k-acc-surface: #ffffff;
+        --k-acc-text-primary: #1a1a1a;
+        --k-acc-text-secondary: #6b7280;
+        --k-acc-text-muted: #6b7280;
+        --k-acc-border: #e5e7eb;
+        --k-acc-border-focus: #fbbf24;
+        --k-acc-glass-bg: rgba(254, 251, 251, 0.1);
+        --k-acc-glass-border: rgba(254, 251, 251, 0.2);
+    }
+
     body {
         color: rgb(var(--app-fg));
         background: rgb(var(--app-bg));
@@ -42,10 +87,61 @@ body {
     }
 
     .app-gradient {
-        @apply bg-gradient-to-br from-indigo-600/20 via-fuchsia-600/10 to-cyan-500/20 dark:from-indigo-500/15 dark:via-fuchsia-500/10 dark:to-cyan-400/15;
+        @apply bg-linear-to-br from-indigo-600/20 via-fuchsia-600/10 to-cyan-500/20 dark:from-indigo-500/15 dark:via-fuchsia-500/10 dark:to-cyan-400/15;
     }
 
     .app-container {
         @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    /* K Acc Rakho Theme Classes */
+    .k-acc-rakho .app-surface {
+        background: var(--k-acc-glass-bg);
+        border: 1px solid var(--k-acc-glass-border);
+        backdrop-filter: blur(16px);
+    }
+
+    .k-acc-rakho .app-gradient {
+        background: linear-gradient(135deg, var(--k-acc-primary-500), var(--k-acc-accent-500));
+    }
+
+    .k-acc-rakho .bg-primary {
+        background-color: var(--k-acc-primary-500);
+        color: white;
+    }
+
+    .k-acc-rakho .bg-secondary {
+        background-color: var(--k-acc-secondary-500);
+        color: white;
+    }
+
+    .k-acc-rakho .bg-accent {
+        background-color: var(--k-acc-accent-500);
+        color: white;
+    }
+
+    .k-acc-rakho .text-primary {
+        color: var(--k-acc-text-primary);
+    }
+
+    .k-acc-rakho .text-secondary {
+        color: var(--k-acc-text-secondary);
+    }
+
+    .k-acc-rakho .border-primary {
+        border-color: var(--k-acc-primary-500);
+    }
+
+    .k-acc-rakho .border-accent {
+        border-color: var(--k-acc-accent-500);
+    }
+
+    .k-acc-rakho .shadow-lg {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .k-acc-rakho body {
+        background: var(--k-acc-background);
+        color: var(--k-acc-text-primary);
     }
 }

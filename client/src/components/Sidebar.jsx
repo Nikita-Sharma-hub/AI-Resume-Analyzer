@@ -1,6 +1,23 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.jsx'
 import { cn } from '../utils/cn.jsx'
+import {
+  Home,
+  User,
+  FileText,
+  Briefcase,
+  Search,
+  Settings,
+  Upload,
+  BarChart3,
+  Users,
+  Calendar,
+  Target,
+  Plus,
+  Star,
+  ChevronRight,
+  Building
+} from 'lucide-react'
 
 function IconSparkles(props) {
   return (
@@ -27,10 +44,28 @@ const linkBase =
 export default function Sidebar({ open, onClose }) {
   const { user } = useAuth()
 
-  const links =
-    user?.role === 'recruiter'
-      ? [{ to: '/recruiter', label: 'Job Posts & Applicants' }]
-      : [{ to: '/candidate', label: 'Resume Analyzer' }]
+  const candidateLinks = [
+    { to: '/candidate', label: 'Dashboard', icon: Home },
+    { to: '/candidate/profile', label: 'My Profile', icon: User },
+    { to: '/candidate/upload-resume', label: 'Upload Resume', icon: Upload },
+    { to: '/candidate/resume-analysis', label: 'Resume Analysis', icon: FileText },
+    { to: '/candidate/ai-feedback', label: 'AI Feedback', icon: BarChart3 },
+    { to: '/candidate/job-search', label: 'Job Search', icon: Search },
+    { to: '/candidate/applied-jobs', label: 'Applied Jobs', icon: Briefcase },
+    { to: '/candidate/settings', label: 'Settings', icon: Settings }
+  ]
+
+  const recruiterLinks = [
+    { to: '/recruiter', label: 'Dashboard', icon: Home },
+    { to: '/recruiter/post-job', label: 'Post New Job', icon: Plus },
+    { to: '/recruiter/manage-jobs', label: 'Manage Jobs', icon: Briefcase },
+    { to: '/recruiter/applicants', label: 'All Applicants', icon: Users },
+    { to: '/recruiter/ranked-candidates', label: 'Ranked Candidates', icon: Star },
+    { to: '/recruiter/profile', label: 'Recruiter Profile', icon: User },
+    { to: '/recruiter/settings', label: 'Settings', icon: Settings }
+  ]
+
+  const links = user?.role === 'recruiter' ? recruiterLinks : candidateLinks
 
   return (
     <>
@@ -52,7 +87,7 @@ export default function Sidebar({ open, onClose }) {
         )}
       >
         <div className="h-16 px-4 flex items-center gap-2 border-b border-slate-200/60 dark:border-slate-800/60">
-          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-600 to-fuchsia-500 text-white flex items-center justify-center shadow-sm shadow-indigo-600/20">
+          <div className="h-10 w-10 rounded-2xl bg-linear-to-br from-indigo-600 to-fuchsia-500 text-white flex items-center justify-center shadow-sm shadow-indigo-600/20">
             <IconSparkles className="h-5 w-5" />
           </div>
           <div className="min-w-0">
@@ -81,7 +116,7 @@ export default function Sidebar({ open, onClose }) {
               onClick={onClose}
               end
             >
-              <span className="h-2 w-2 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-400" />
+              <l.icon className="h-5 w-5" />
               <span className="truncate">{l.label}</span>
             </NavLink>
           ))}

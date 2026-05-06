@@ -56,7 +56,7 @@ export async function deleteJob(jobId) {
 
 export async function getJobApplicants(jobId) {
   try {
-    const res = await apiClient.get(`/job/${jobId}/applicants`)
+    const res = await apiClient.get(`/application/job/${jobId}/applicants`)
     return res.data
   } catch (err) {
     throw normalizeApiError(err)
@@ -66,6 +66,16 @@ export async function getJobApplicants(jobId) {
 export async function rankApplicants(jobId) {
   try {
     const res = await apiClient.post(`/job/${jobId}/rank`)
+    return res.data
+  } catch (err) {
+    throw normalizeApiError(err)
+  }
+}
+
+// Get dashboard statistics for recruiter
+export async function getRecruiterStats() {
+  try {
+    const res = await apiClient.get('/dashboard/recruiter-stats')
     return res.data
   } catch (err) {
     throw normalizeApiError(err)

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react'
-import axios from "axios"
+import axios from 'axios'
 import { login as loginApi, register as registerApi } from '../services/authService.jsx'
 import {
   readStorageJson,
@@ -38,6 +38,7 @@ export function AuthProvider({ children }) {
     setError(null)
     try {
       const data = await loginApi({ email, password })
+      writeStorageJson(STORAGE_KEYS.auth, { token: data.token, user: data.user })
       setAuth({ token: data.token, user: data.user })
       return data.user
     } catch (e) {
@@ -63,6 +64,22 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  const updateUser = useCallback(async (profileData) => {
+    setBusy(true)
+    setError(null)
+    try {
+      // Update user in local state first
+      const updatedUser = { ...auth?.user, ...profileData }
+      setAuth({ ...auth, user: updatedUser })
+      return updatedUser
+    } catch (e) {
+      setError(e?.message || 'Profile update failed')
+      throw e
+    } finally {
+      setBusy(false)
+    }
+  }, [auth])
+
   const value = useMemo(() => {
     const user = auth?.user || null
     const token = auth?.token || null
@@ -81,6 +98,7 @@ export function AuthProvider({ children }) {
       login,
       register,
       logout,
+      updateUser,
       hasRole,
     }
   }, [auth, busy, error, login, logout, register])

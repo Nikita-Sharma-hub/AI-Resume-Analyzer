@@ -4,6 +4,7 @@ import {
     getMyResumes,
     deleteResume,
     analyzeResume,
+    getResumeAnalysis,
     matchResumeWithJob,
     optimizeResume,
     getSkillGapAnalysis
@@ -16,6 +17,7 @@ const router = express.Router();
 router.post("/upload", protect, upload.single("resume"), uploadResume);
 router.post("/analyze", protect, upload.single("resume"), analyzeResume);
 router.get("/my", protect, getMyResumes);
+router.get("/:resumeId/analysis", protect, getResumeAnalysis);
 router.delete("/:id", protect, deleteResume);
 
 

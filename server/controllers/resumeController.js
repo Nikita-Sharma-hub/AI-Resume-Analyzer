@@ -454,6 +454,63 @@ export const optimizeResume = async (req, res) => {
 
 
 
+export const getResumeAnalysis = async (req, res) => {
+    try {
+        const { resumeId } = req.params;
+
+        if (!resumeId) {
+            return res.status(400).json({ message: "Resume ID is required" });
+        }
+
+        const resume = await Resume.findById(resumeId);
+
+        if (!resume) {
+            return res.status(404).json({ message: "Resume not found" });
+        }
+
+        if (resume.user.toString() !== req.user.toString()) {
+            return res.status(403).json({ message: "Not authorized to access this resume" });
+        }
+
+        if (!resume.analysis) {
+            return res.status(200).json({
+                message: "No analysis available for this resume",
+                hasAnalysis: false,
+                resume: {
+                    _id: resume._id,
+                    fileName: resume.fileName,
+                    createdAt: resume.createdAt
+                }
+            });
+        }
+
+        res.status(200).json({
+            message: "Resume analysis retrieved successfully",
+            hasAnalysis: true,
+            resume: {
+                _id: resume._id,
+                fileName: resume.fileName,
+                createdAt: resume.createdAt
+            },
+            analysis: resume.analysis,
+            score: resume.analysis.score,
+            summary: resume.analysis.summary,
+            extractedSkills: resume.analysis.extractedSkills || [],
+            seniorityHint: resume.analysis.seniorityHint,
+            recommendations: resume.analysis.improvementSuggestions || [],
+            sections: resume.analysis.sections || [],
+            skillCategories: resume.analysis.skillCategories || {},
+            readabilityScore: resume.analysis.readabilityScore,
+            completenessScore: resume.analysis.completenessScore,
+            formatScore: resume.analysis.formatScore
+        });
+
+    } catch (error) {
+        console.error('Get resume analysis error:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const getSkillGapAnalysis = async (req, res) => {
 
     try {

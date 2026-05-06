@@ -1,6 +1,8 @@
 import Button from './ui/Button.jsx'
 import { useAuth } from '../hooks/useAuth.jsx'
 import { useTheme } from '../hooks/useTheme.jsx'
+import { Search, Bell, Settings, User, ChevronRight } from 'lucide-react'
+import ThemeSelector from './ThemeSelector.jsx'
 
 function IconMenu(props) {
   return (
@@ -74,6 +76,25 @@ export default function Navbar({ onMenu }) {
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeSelector />
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-64 px-4 py-2 pr-10 rounded-xl border border-gray-300/60 dark:border-gray-600/60 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+            />
+            <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+          <Button variant="ghost" size="sm" className="relative">
+            <Bell className="h-4 w-4" />
+            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+          </Button>
+          <div className="relative">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/candidate/settings')} className="flex items-center space-x-2">
+              <User className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
           <Button type="button" variant="secondary" onClick={toggle} aria-label="Toggle theme">
             {resolvedTheme === 'dark' ? (
               <IconSun className="h-5 w-5" />
@@ -89,4 +110,3 @@ export default function Navbar({ onMenu }) {
     </header>
   )
 }
-

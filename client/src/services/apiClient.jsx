@@ -17,11 +17,18 @@ apiClient.interceptors.request.use((config) => {
 })
 
 export function normalizeApiError(err) {
-  const message =
-    err?.response?.data?.message ||
+  // Check if response is HTML (error page) instead of JSON
+  const isHtmlResponse = err?.response?.data &&
+    typeof err.response.data === 'string' &&
+    err.response.data.includes('<!doctype')
+
+  const message = isHtmlResponse
+    ? 'Server returned HTML response instead of JSON'
+    : err?.response?.data?.message ||
     err?.response?.data?.error ||
     err?.message ||
     'Request failed'
+
   const status = err?.response?.status
   return { message, status, raw: err }
 }

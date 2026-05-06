@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 connectDB();
 
@@ -19,6 +20,7 @@ const corsOptions = {
 
         const allowedOrigins = [
             "http://localhost:5173",
+            "http://localhost:5174",
             "http://localhost:3000",
             "http://localhost:4173",
             process.env.FRONTEND_URL
@@ -34,7 +36,7 @@ const corsOptions = {
         }
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 };
 
@@ -46,6 +48,12 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Static uploads folder
 app.use("/uploads", express.static("uploads"));
+
+// Ensure all responses are JSON
+app.use((req, res, next) => {
+    res.header('Content-Type', 'application/json');
+    next();
+});
 
 // Root route
 app.get("/", (req, res) => {
@@ -66,6 +74,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/application", applicationRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

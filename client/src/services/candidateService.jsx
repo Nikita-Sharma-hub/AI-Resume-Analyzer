@@ -1,12 +1,27 @@
 import { apiClient, normalizeApiError } from './apiClient.jsx'
 
-export async function analyzeResume(file) {
+export async function analyzeResume(file, resumeId = null) {
   try {
-    const form = new FormData()
-    form.append('resume', file)
+    if (resumeId) {
+      // Analyze existing resume by ID
+      const res = await apiClient.get(`/resume/${resumeId}/analysis`)
+      return res.data
+    } else {
+      // Analyze new file upload
+      const form = new FormData()
+      form.append('resume', file)
 
-    const res = await apiClient.post('/resume/analyze', form)
+      const res = await apiClient.post('/resume/analyze', form)
+      return res.data
+    }
+  } catch (err) {
+    throw normalizeApiError(err)
+  }
+}
 
+export async function getResumeAnalysis(resumeId) {
+  try {
+    const res = await apiClient.get(`/resume/${resumeId}/analysis`)
     return res.data
   } catch (err) {
     throw normalizeApiError(err)
@@ -78,6 +93,25 @@ export async function getSkillGapAnalysis(resumeId, jobId) {
 export async function getJobRecommendations() {
   try {
     const res = await apiClient.get('/job/recommendations')
+    return res.data
+  } catch (err) {
+    throw normalizeApiError(err)
+  }
+}
+
+export async function getMyApplications() {
+  try {
+    const res = await apiClient.get('/application/my')
+    return res.data
+  } catch (err) {
+    throw normalizeApiError(err)
+  }
+}
+
+// Get dashboard statistics
+export async function getDashboardStats() {
+  try {
+    const res = await apiClient.get('/dashboard/stats')
     return res.data
   } catch (err) {
     throw normalizeApiError(err)
